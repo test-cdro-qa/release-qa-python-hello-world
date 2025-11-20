@@ -13,8 +13,8 @@ on:
 jobs:
   app1:
     
-    if: ${{ fromJSON(inputs.manifest)['qa-python-hello-World']['cbpautomation/python-hello-world-docker'].deploy }}
-    uses: cbp-test-QA-automation/qa-python-hello-World/.cloudbees/workflows/deploy.yaml
+    if: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].deploy }}
+    uses: test-cdro-qa/qa-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
-      artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-World']['cbpautomation/python-hello-world-docker'].id }}
+      artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
       environment: QA
