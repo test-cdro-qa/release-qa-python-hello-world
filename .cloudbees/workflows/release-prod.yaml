@@ -11,8 +11,8 @@ on:
       
 jobs:
   app1:
-    if: ${{ fromJSON(inputs.manifest)['qa-python-hello-World'].deploy }}
-    uses: cbp-test-QA-automation/qa-python-hello-World/.cloudbees/workflows/deploy.yaml
+    if: ${{ fromJSON(inputs.manifest)['qa-python-hello-world'].deploy }}
+    uses: test-cdro-qa/qa-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
-      manifest: ${{ toJSON(fromJSON(inputs.manifest)['qa-python-hello-World']) }}
+      manifest: ${{ toJSON(fromJSON(inputs.manifest)['qa-python-hello-world']) }}
       environment: QA
