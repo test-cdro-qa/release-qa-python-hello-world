@@ -29,7 +29,7 @@ jobs:
     with:
       disallowLaunchByUser: false
       notifyAllEligibleUsers: false
-      approvers: 1c132fd0-9d10-11ef-96e6-42010a83ae68
+      approvers: ce19a514-7c3b-11f0-9922-42010a83ae54
   prod-deployment:
     needs: qa-approval
     environment: PROD
@@ -45,7 +45,7 @@ jobs:
     with:
       disallowLaunchByUser: false
       notifyAllEligibleUsers: false
-      approvers: 1c132fd0-9d10-11ef-96e6-42010a83ae68
+      approvers: ce19a514-7c3b-11f0-9922-42010a83ae54
   qa-deployment:
     environment: QA
     steps:
