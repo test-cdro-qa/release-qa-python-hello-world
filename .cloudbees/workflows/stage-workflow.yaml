@@ -33,19 +33,19 @@ jobs:
         uses: docker://golang:1.20.3-alpine3.17
         name: Deploy
   dev-stage:
-    uses: cbp-test-QA-automation/qa-python-hello-World/.cloudbees/workflows/deploy.yaml
+    uses: test-cdro-qa/qa-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
-      artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-World']['cbpautomation/python-hello-world-docker'].id }}
+      artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
       environment: DEV
   qa-stage:
     needs: dev-stage
-    uses: cbp-test-QA-automation/qa-python-hello-World/.cloudbees/workflows/deploy.yaml
+    uses: test-cdro-qa/qa-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
-      artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-World']['cbpautomation/python-hello-world-docker'].id }}
+      artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
       environment: QA
   prod-stage:
     needs: qa-stage
-    uses: cbp-test-QA-automation/qa-python-hello-World/.cloudbees/workflows/deploy.yaml
+    uses: test-cdro-qa/qa-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
-      artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-World']['cbpautomation/python-hello-world-docker'].id }}
+      artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
       environment: PROD
