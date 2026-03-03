@@ -4,10 +4,11 @@ name: Error workflow
 
 on:
   workflow_dispatch:
-    
-   
-      
-
+    inputs:
+      manifest:
+        type: string
+        required: true
+     
 jobs:
   app1:
     
