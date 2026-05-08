@@ -8,6 +8,9 @@ on:
       manifest:
         type: string
         required: true
+      flag-ids:
+        type: string
+        required: false
       
 
 jobs:
