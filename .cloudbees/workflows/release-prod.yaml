@@ -8,10 +8,15 @@ on:
       manifest:
         type: string
         required: true
+      flag-ids:
+        type: string
+        required: false
       
+
 jobs:
   app1:
-     if: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].deploy }}
+    
+    if: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].deploy }}
     uses: test-cdro-qa/qa-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
       artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
