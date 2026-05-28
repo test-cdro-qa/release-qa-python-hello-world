@@ -1,85 +1,51 @@
 apiVersion: automation.cloudbees.io/v1alpha1
 kind: workflow
-name: stage-manual-approval
+name: My workflow
 on:
   workflow_dispatch:
     inputs:
       manifest:
         type: string
         required: true
-        description: This is a system-generated parameter and is required for use in
-          application releases. Refer to
-          https://docs.cloudbees.com/docs/cloudbees-platform/latest/applications/releases#manifest
-          for the expected format
+        description: This is a system-generated parameter and is required for use in application releases. Refer to https://docs.cloudbees.com/docs/cloudbees-platform/latest/applications/releases#manifest for the expected format
 metadata:
   stages/v1alpha1:
-    - name: Stage
-      jobs:
-        - job
-        - start-flow
     - name: QA
       jobs:
-        - Deploy-QA
+        - qa-deployment
         - qa-approval
     - name: PROD
       jobs:
-        - Deploy-prod
+        - prod-deployment
         - prod-approval
-    - name: Post-Release
-      jobs:
-        - close
 jobs:
   qa-approval:
-    needs: Deploy-QA
+    needs: qa-deployment
     timeout-minutes: 3
     delegates: cloudbees-io/manual-approval/custom-job.yml@v1
     with:
       disallowLaunchByUser: false
       notifyAllEligibleUsers: false
-      approvers: 1c132fd0-9d10-11ef-96e6-42010a83ae68,0cb88e48-03d3-11eb-9d67-42010a83ae35
-  Deploy-prod:
+      approvers: ce19a514-7c3b-11f0-9922-42010a83ae54
+  prod-deployment:
     needs: qa-approval
     environment: PROD
     steps:
-      - run: echo "Deploying to prod"
+      - run: echo "hello world"
         uses: docker://golang:1.20.3-alpine3.17
-        name: Say hello
+        name: hello-world
         shell: sh
   prod-approval:
-    needs: Deploy-prod
+    needs: prod-deployment
     timeout-minutes: 3
     delegates: cloudbees-io/manual-approval/custom-job.yml@v1
     with:
-      instructions: Approve this job once PROD deployment is successfull
       disallowLaunchByUser: false
       notifyAllEligibleUsers: false
-      approvers: 1c132fd0-9d10-11ef-96e6-42010a83ae68,0cb88e48-03d3-11eb-9d67-42010a83ae35
-  Deploy-QA:
+      approvers: ce19a514-7c3b-11f0-9922-42010a83ae54
+  qa-deployment:
     environment: QA
     steps:
-      - run: echo "Deploying.... to ${{ job.environment }}"
+      - run: echo "Hello world"
         uses: docker://golang:1.20.3-alpine3.17
-        name: Deploy
-    needs: start-flow
-  job:
-    steps:
-      - name: Say hello
-        uses: docker://golang:1.20.3-alpine3.17
-        shell: sh
-        run: echo "hello world"
-  start-flow:
-    needs: job
-    timeout-minutes: 3
-    delegates: cloudbees-io/manual-approval/custom-job.yml@v1
-    with:
-      disallowLaunchByUser: false
-      notifyAllEligibleUsers: false
-  close:
-    needs:
-      - prod-approval
-    timeout-minutes: 3
-    delegates: cloudbees-io/manual-approval/custom-job.yml@v1
-    with:
-      disallowLaunchByUser: false
-      notifyAllEligibleUsers: false
-      approvers: cd-ro test
+        name: hello-world
