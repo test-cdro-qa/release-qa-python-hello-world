@@ -1,0 +1,18 @@
+
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: multiEnvironmentApprovalWorkflow
+on:
+  workflow_dispatch:
+jobs:
+  first-env-approval-job:
+    environment: prod
+    steps:
+    - name: Placeholder step
+      uses: cloudbees-io/checkout@v1
+  second-env-approval-job:
+    needs: [first-env-approval-job]
+    environment: prod
+    steps:
+    - name: Placeholder step
+      uses: cloudbees-io/checkout@v1
