@@ -1,0 +1,29 @@
+
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: envManualEnvApprovalWorkflow
+on:
+  workflow_dispatch:
+    inputs:
+      manifest:
+        type: string
+        required: true
+jobs:
+  first-env-approval-job:
+    environment: approval_QA
+    steps:
+    - name: Placeholder step
+      uses: cloudbees-io/checkout@v1
+  manual-approval-job:
+    needs: [first-env-approval-job]
+    delegates: cloudbees-io/manual-approval/custom-job.yml@v1
+    timeout-minutes: 15
+    with:
+      instructions: Manual approval between environment approvals.
+      approvers: ce19a514-7c3b-11f0-9922-42010a83ae54
+  second-env-approval-job:
+    needs: [manual-approval-job]
+    environment: approval_QA
+    steps:
+    - name: Placeholder step
+      uses: cloudbees-io/checkout@v1
